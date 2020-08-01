@@ -36,6 +36,7 @@ def main():
     dp.add_handler(ext.CommandHandler('shame', shame, pass_args=True))
     dp.add_handler(ext.CommandHandler('set_shame_counter', set_shame_counter, pass_args=True))
     dp.add_handler(ext.CommandHandler('get_shame_list', get_shame_list))
+    dp.add_handler(ext.CommandHandler('redeem', redeem))
 
     # running the bot
     updater.start_polling()  # starts the bot
