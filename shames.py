@@ -16,7 +16,12 @@ def get_shames():
 def shame(update: tg.Update, context: ext.CallbackContext):
     chat_id = update.effective_chat.id
     shames = get_shames()
-    if context.args[0] in shames:
+    if len(context.args) == 0:
+        context.bot.send_message(
+            chat_id=chat_id,
+            text="Please provide a person to shame."
+        )
+    elif context.args[0] in shames:
         shames[context.args[0]] += 1
         context.bot.send_message(
             chat_id=chat_id,
@@ -26,7 +31,7 @@ def shame(update: tg.Update, context: ext.CallbackContext):
             )
         )
 
-        with open(INV + 'shames.txt', 'w') as f:
+        with open(conf.INVENTORY + 'shames.txt', 'w') as f:
             f.write(str(shames))
     else:
         context.bot.send_message(
@@ -41,7 +46,17 @@ def set_shame_counter(update: tg.Update, context: ext.CallbackContext):
     chat_id = update.effective_chat.id
     shames = get_shames()
     if update.message.from_user.username == 'KoffieKopje':
-        if context.args[0] in shames:
+        if len(context.args) == 0:
+            context.bot.send_message(
+                chat_id=chat_id,
+                text="Please provide a person to shame."
+            )
+        elif len(context.args) == 1:
+            context.bot.send_message(
+                chat_id=chat_id,
+                text="Please provide a number to set the shame counter to."
+            )
+        elif context.args[0] in shames:
             shames[context.args[0]] = int(context.args[1])
             context.bot.send_message(
                 chat_id=chat_id,
@@ -50,7 +65,7 @@ def set_shame_counter(update: tg.Update, context: ext.CallbackContext):
                     int(context.args[1])
                 )
             )
-            with open(INV + 'shames.txt', 'w') as f:
+            with open(conf.INVENTORY + 'shames.txt', 'w') as f:
                 f.write(str(shames))
         else:
             context.bot.send_message(
