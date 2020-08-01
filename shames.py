@@ -18,7 +18,7 @@ def is_int(s):
 def get_shames():
     """Gets the shame dict from shames.txt in INVENTORY folder (see config)."""
     try:
-        with open(conf.INVENTORY + 'shames.txt', 'r') as f:
+        with open(conf.INVENTORY + 'shames.txt', 'r', encoding='utf8') as f:
             s = f.read()
             shames = ast.literal_eval(s)
     except IOError:
@@ -28,7 +28,7 @@ def get_shames():
 
 def write_shames(new_shames: dict):
     """Writes new_shames to shames.txt in INVENTORY folder (see config)."""
-    with open(conf.INVENTORY + 'shames.txt', 'w') as f:
+    with open(conf.INVENTORY + 'shames.txt', 'w', encoding='utf8') as f:
         f.write(str(new_shames))
 
 
@@ -69,28 +69,69 @@ def shame(update: tg.Update, context: ext.CallbackContext):
 
 
 def redeem(update: tg.Update, context: ext.CallbackContext):
-    """Redeems provided number of shames."""
+    """Redeems provided number of shames.
+
+    /redeem [person_to_redeem (optional)] [n_to_redeem (optional)]
+    Notes:
+        if no value is passed, one shame is redeemed for the user sending the
+        command;
+        if a value is passed, this value of shames is redeemed;
+        the person calling this command can also give the name of another
+        person to redeem, with an optional second value as the number of
+        redeemed shames.
+    """
     chat_id = update.effective_chat.id
     shames = get_shames()
-    if is_int(context.args[0]):
-        shames[update.message.from_user.first_name] -= context.args[0]
-        write_shames(shames)
-        context.bot.send_message(
-            chat_id=chat_id,
-            text="{0:d} shame(s) redeemed. Good job!".format(
-                context.args[0]
+    if len(context.args) == 0:
+        # /redeem
+        n_to_redeem = 1
+        redeemed_soul = update.message.from_user.first_name
+    elif is_int(context.args[0]):
+        # /redeem [number_redeemed_shames]
+        n_to_redeem = int(context.args[0])
+        redeemed_soul = update.message.from_user.first_name
+    elif context.args[0] in shames:
+        # /redeem [person_to_redeem] [number_of_redeemed_shames (optional)]
+        if len(context.args) == 1:
+            # no number_of_redeemed_shames given
+            n_to_redeem = 1
+        elif is_int(context.args[1]):
+            n_to_redeem = int(context.args[1])
+        else:
+            context.bot.send_message(
+                chat_id=chat_id,
+                text="Please provide a proper number of shames to redeem."
             )
-        )
+            return
+
+        redeemed_soul = context.args[0]
     else:
         context.bot.send_message(
             chat_id=chat_id,
             text="Please provide a proper number of shames to redeem."
         )
+        return
 
+    shames[redeemed_soul] -= n_to_redeem
+    if shames[redeemed_soul] < 0:
+        shames[redeemed_soul] = 0
+    write_shames(shames)
+    context.bot.send_message(
+        chat_id=chat_id,
+        text="{0:d} shame(s) redeemed. Good job! Current shame count "
+             "for {1:s} is now {2:d}.".format(
+                n_to_redeem,
+                redeemed_soul,
+                shames[redeemed_soul]
+        )
+    )
 
 
 def set_shame_counter(update: tg.Update, context: ext.CallbackContext):
-    """Sets shame counter"""
+    """Sets shame counter
+
+    /set_shame_counter [person_to_set] [shame_value]
+    """
     chat_id = update.effective_chat.id
     shames = get_shames()
     # check if the person trying this command is the one and only

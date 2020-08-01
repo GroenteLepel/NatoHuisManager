@@ -1,1 +1,1 @@
-{'Margot': 1, 'Thijs': 0, 'Tom': 0, 'Daniel': 0}
+{'Margot': 1, 'Thijs': 0, 'Tom': 0, 'Daniël': 0}
