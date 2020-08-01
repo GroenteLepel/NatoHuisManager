@@ -8,7 +8,7 @@ import ast
 import collections
 
 NATOHUISBOT_TOKEN = '1156628740:AAFROcmqib7rdBQUY7NE2Zi2X85LEGpPRFw'
-
+INV = "inventory/"
 
 def get_url():
     contents = requests.get("https://random.dog/woof.json").json()
@@ -17,7 +17,7 @@ def get_url():
 
 
 def get_shames():
-    with open('shames.txt', 'r') as f:
+    with open(INV + 'shames.txt', 'r') as f:
         s = f.read()
         shames = ast.literal_eval(s)
     return shames
@@ -98,7 +98,7 @@ def shame(update: tg.Update, context: ext.CallbackContext):
             )
         )
 
-        with open('shames.txt', 'w') as f:
+        with open(INV + 'shames.txt', 'w') as f:
             f.write(str(shames))
     else:
         context.bot.send_message(
@@ -122,7 +122,7 @@ def set_shame_counter(update: tg.Update, context: ext.CallbackContext):
                     int(context.args[1])
                 )
             )
-            with open('shames.txt', 'w') as f:
+            with open(INV + 'shames.txt', 'w') as f:
                 f.write(str(shames))
         else:
             context.bot.send_message(
@@ -137,6 +137,7 @@ def set_shame_counter(update: tg.Update, context: ext.CallbackContext):
             chat_id=chat_id,
             text="You are not allowed to do that. Shame on you!"
         )
+
 
 def get_shame_list(update: tg.Update, context: ext.CallbackContext):
     chat_id = update.effective_chat.id
