@@ -5,6 +5,7 @@ caps - Responds with a copy of your message in caps.
 
 wie_is_de_lul - Picks a random dick from NatoHuis who is forced to cook.
 add_restje - Add a restje to the NatoHuis koelkast.
+remove_restje - Remove a restje to the NatoHuis koelkast.
 dibs - Dibs a restje for you.
 
 shame - SHAMES a person provided by the user.

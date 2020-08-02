@@ -33,6 +33,7 @@ def main():
     # kitchen
     dp.add_handler(ext.CommandHandler('wie_is_de_lul', pick))
     dp.add_handler(ext.CommandHandler('add_restje', add_restje, pass_args=True))
+    dp.add_handler(ext.CommandHandler('remove_restje', remove_restje, pass_args=True))
     dp.add_handler(ext.CommandHandler('dibs', dibs, pass_args=True))
 
     # shames

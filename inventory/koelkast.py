@@ -83,6 +83,14 @@ class Koelkast:
 
         return "Restje " + restje_to_find + " not found.", None
 
+    def remove(self, restje: str):
+        iloc, bakje = self.find(restje)
+        if bakje:
+            self.inventory.remove(bakje)
+            return True
+        else:
+            return False
+
     def dibs(self, restje: str, dibsed_by: str):
         iloc, bakje = self.find(restje)
         if bakje:
