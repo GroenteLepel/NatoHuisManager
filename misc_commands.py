@@ -2,6 +2,8 @@ import telegram as tg
 from telegram import ext
 import requests
 
+import functools as ft
+
 
 def get_url():
     contents = requests.get("https://random.dog/woof.json").json()
@@ -61,3 +63,5 @@ def inline_caps(update: tg.Update, context: ext.CallbackContext):
         )
     )
     context.bot.answer_inline_query(update.inline_query.id, results)
+
+
