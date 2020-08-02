@@ -42,48 +42,72 @@ def pick(update: tg.Update, context: ext.CallbackContext):
 def add_restje(update: tg.Update, context: ext.CallbackContext):
     chat_id = update.effective_chat.id
     koelkast = kk.Koelkast.from_file(config.INVENTORY + "koelkast.txt")
-    new_restje = kk.Restje(context.args[0])
-    koelkast.add(new_restje)
-    context.bot.send_message(
-        chat_id,
-        "Restje {0:s} added to the koelkast!\n"
-        "{1:s}".format(
-            new_restje.restje,
-            str(koelkast)
+    if len(context.args) == 0:
+        context.bot.send_message(
+            chat_id,
+            "Please provide the restje which you want to add:\n"
+            "like so: /add_restje [restje]"
         )
-    )
-    koelkast.save(config.INVENTORY + "koelkast.txt")
+    else:
+        new_restje = kk.Restje(context.args[0])
+        koelkast.add(new_restje)
+        context.bot.send_message(
+            chat_id,
+            "Restje {0:s} added to the koelkast!\n"
+            "{1:s}".format(
+                new_restje.restje,
+                str(koelkast)
+            )
+        )
+        koelkast.save(config.INVENTORY + "koelkast.txt")
 
 
 def remove_restje(update: tg.Update, context: ext.CallbackContext):
     chat_id = update.effective_chat.id
-    koelkast = kk.Koelkast.from_file(config.INVENTORY + "koelkast.txt")
-    to_remove = context.args[0]
-    msg = koelkast.remove(to_remove)
-    context.bot.send_message(
-        chat_id,
-        f"{msg}\n"
-        f"{str(koelkast)}"
-    )
-    koelkast.save(config.INVENTORY + "koelkast.txt")
+    if len(context.args) == 0:
+        context.bot.send_message(
+            chat_id,
+            "Please provide the restje which you want to remove:\n"
+            "like so: /remove_restje [restje]"
+        )
+    else:
+        koelkast = kk.Koelkast.from_file(config.INVENTORY + "koelkast.txt")
+        to_remove = context.args[0]
+        msg = koelkast.remove(to_remove)
+        context.bot.send_message(
+            chat_id,
+            f"{msg}\n"
+            f"{str(koelkast)}"
+        )
+        koelkast.save(config.INVENTORY + "koelkast.txt")
 
 
 def dibs(update: tg.Update, context: ext.CallbackContext):
     chat_id = update.effective_chat.id
     koelkast = kk.Koelkast.from_file(config.INVENTORY + "koelkast.txt")
-    restje = context.args[0]
-    dibsed_by = update.message.from_user.first_name
-    msg = koelkast.dibs(restje, dibsed_by)
-    if not msg:
+    if len(context.args) == 0:
         context.bot.send_message(
             chat_id,
-            "Dibsed restje {0:s} for {1:s}".format(
-                restje,
-                dibsed_by
-            )
+            "Please provide the restje which you want to dibs:\n"
+            "like so: /dibse [restje] [person_to_dibs (optional)]"
         )
-        koelkast.save(config.INVENTORY + "koelkast.txt")
     else:
-        context.bot.send_message(chat_id, msg)
+        restje = context.args[0]
+        if len(context.args) > 1:
+            dibsed_by = context.args[1]
+        else:
+            dibsed_by = update.message.from_user.first_name
+        msg = koelkast.dibs(restje, dibsed_by)
+        if not msg:
+            context.bot.send_message(
+                chat_id,
+                "Dibsed restje {0:s} for {1:s}".format(
+                    restje,
+                    dibsed_by
+                )
+            )
+            koelkast.save(config.INVENTORY + "koelkast.txt")
+        else:
+            context.bot.send_message(chat_id, msg)
 
-    context.bot.send_message(chat_id, str(koelkast))
+        context.bot.send_message(chat_id, str(koelkast))
