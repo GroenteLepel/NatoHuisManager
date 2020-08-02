@@ -37,6 +37,7 @@ def main():
     dp.add_handler(ext.CommandHandler('dibs', dibs, pass_args=True))
 
     # shames
+    dp.add_handler(ext.CommandHandler('create_shames', create_shames))
     dp.add_handler(ext.CommandHandler('shame', shame, pass_args=True))
     dp.add_handler(ext.CommandHandler('redeem', redeem, pass_args=True))
     dp.add_handler(ext.CommandHandler('set_shame_counter', set_shame_counter, pass_args=True))

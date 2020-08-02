@@ -81,12 +81,12 @@ class Koelkast:
         return "Restje " + restje_to_find + " not found.", None
 
     def remove(self, restje: str):
-        iloc, bakje = self.find(restje)
+        msg, bakje = self.find(restje)
         if bakje:
             self.inventory.remove(bakje)
-            return True
+            return f"Restje {restje} removed from the koelkast."
         else:
-            return False
+            return msg
 
     def dibs(self, restje: str, dibsed_by: str):
         msg, bakje = self.find(restje)

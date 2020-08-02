@@ -64,18 +64,13 @@ def remove_restje(update: tg.Update, context: ext.CallbackContext):
     chat_id = update.effective_chat.id
     koelkast = kk.Koelkast.from_file(config.INVENTORY + "koelkast.txt")
     to_remove = context.args[0]
-    if koelkast.remove(to_remove):
-        context.bot.send_message(
-            chat_id,
-            f"Restje {to_remove} removed from the koelkast!\n"
-            f"{str(koelkast)}"
-        )
-        koelkast.save(config.INVENTORY + "koelkast.txt")
-    else:
-        context.bot.send_message(
-            chat_id,
-            "Something went wrong."
-        )
+    msg = koelkast.remove(to_remove)
+    context.bot.send_message(
+        chat_id,
+        f"{msg}\n"
+        f"{str(koelkast)}"
+    )
+    koelkast.save(config.INVENTORY + "koelkast.txt")
 
 
 def dibs(update: tg.Update, context: ext.CallbackContext):

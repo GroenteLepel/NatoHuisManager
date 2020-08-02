@@ -2,6 +2,7 @@ import telegram as tg
 from telegram import ext
 
 import config as conf
+import database as db
 
 import ast
 
@@ -17,19 +18,23 @@ def is_int(s):
 
 def get_shames():
     """Gets the shame dict from shames.txt in INVENTORY folder (see config)."""
-    try:
-        with open(conf.INVENTORY + 'shames.txt', 'r', encoding='utf8') as f:
-            s = f.read()
-            shames = ast.literal_eval(s)
-    except IOError:
-        print("The shames.txt file could not be opened!")
+    s = db.load("shames.txt")
+    shames = ast.literal_eval(s)
     return shames
+
+
+def create_shames(update: tg.Update, context: ext.CallbackContext):
+    shames = {'Margot': 0, 'Thijs': 0, 'Daniël': 0, 'Tom': 0}
+    db.save("shames.txt", str(shames))
+    context.bot.send_message(
+        update.effective_chat.id,
+        f"shames init to {str(shames)}."
+    )
 
 
 def write_shames(new_shames: dict):
     """Writes new_shames to shames.txt in INVENTORY folder (see config)."""
-    with open(conf.INVENTORY + 'shames.txt', 'w', encoding='utf8') as f:
-        f.write(str(new_shames))
+    db.save("shames.txt", str(new_shames))
 
 
 def shame(update: tg.Update, context: ext.CallbackContext):
