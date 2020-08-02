@@ -1,7 +1,9 @@
-start - Shows the start message of the bot.
-caps - Responds with a copy of your message in caps.
 bop - Responds with a random dog picture.
+start - Shows the start message of the bot.
+git - Shows the git repo of this bot.
+caps - Responds with a copy of your message in caps.
 wie_is_de_lul - Picks a random dick from NatoHuis who is forced to cook.
 shame - SHAMES a person provided by the user.
+redeem - redeems shames for user / provided user.
 set_shame_counter - Sets the shame counter of the provided person.
 get_shame_list - Gets the current shames of NatoHuis.
