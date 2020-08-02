@@ -51,13 +51,31 @@ def add_restje(update: tg.Update, context: ext.CallbackContext):
     koelkast.add(new_restje)
     context.bot.send_message(
         chat_id,
-        "Restje {0:s} toegevoegd aan de koelkast!\n"
+        "Restje {0:s} added to the koelkast!\n"
         "{1:s}".format(
             new_restje.restje,
             str(koelkast)
         )
     )
     koelkast.save(config.INVENTORY + "koelkast.txt")
+
+
+def remove_restje(update: tg.Update, context: ext.CallbackContext):
+    chat_id = update.effective_chat.id
+    koelkast = kk.Koelkast.from_file(config.INVENTORY + "koelkast.txt")
+    to_remove = context.args[0]
+    if koelkast.remove(to_remove):
+        context.bot.send_message(
+            chat_id,
+            f"Restje {to_remove} removed from the koelkast!\n"
+            f"{str(koelkast)}"
+        )
+        koelkast.save(config.INVENTORY + "koelkast.txt")
+    else:
+        context.bot.send_message(
+            chat_id,
+            "Something went wrong."
+        )
 
 
 def dibs(update: tg.Update, context: ext.CallbackContext):
