@@ -189,7 +189,7 @@ def get_shame_list(update: tg.Update, context: ext.CallbackContext):
     scoreboard = "<b>Shame scoreboard:</b>\n"
     for i, item in enumerate(shames_sorted):
         scoreboard += "{0:d}. {1:s}: {2:d} shame".format(
-            i, item[0], item[1]
+            i+1, item[0], item[1]
         )
         if item[1] == 1:
             scoreboard += "\n"
