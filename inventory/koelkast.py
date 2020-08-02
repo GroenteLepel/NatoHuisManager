@@ -1,3 +1,5 @@
+import database as db
+
 import datetime
 
 
@@ -59,10 +61,8 @@ class Koelkast:
 
     @staticmethod
     def from_file(file: str):
-        with open(file, "r", encoding='utf8') as f:
-            next(f)  # skip the header
-            inventory_string = f.read().split('\n')
-            inventory = [Restje] * len(inventory_string)
+        inventory_string = db.load(file).split('\n')[1:]
+        inventory = [Restje] * len(inventory_string)
         for i, restje in enumerate(inventory_string):
             # remove the ' - ' with [3:]
             inventory[i] = Restje.from_string(restje[3:])
@@ -91,10 +91,8 @@ class Koelkast:
         else:
             return iloc
 
-
     def save(self, file):
-        with open(file, "w", encoding='utf8') as f:
-            f.write(str(self))
+        db.save(file, str(self))
 
     def __str__(self):
         s = "NatoHuis koelkast:"
