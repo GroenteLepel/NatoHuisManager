@@ -76,9 +76,6 @@ class Koelkast:
     def find(self, restje_to_find: str):
         for iloc, bakje in enumerate(self.inventory):
             if bakje.restje == restje_to_find:
-                if bakje.is_dibsed():
-                    return "This restje has already been dibsed!", None
-
                 return iloc, bakje
 
         return "Restje " + restje_to_find + " not found.", None
@@ -92,12 +89,15 @@ class Koelkast:
             return False
 
     def dibs(self, restje: str, dibsed_by: str):
-        iloc, bakje = self.find(restje)
+        msg, bakje = self.find(restje)
         if bakje:
+            if bakje.is_dibsed():
+                return msg
+            iloc = msg
             self.inventory[iloc].dibs(dibsed_by)
             return None
         else:
-            return iloc
+            return msg
 
     def save(self, file):
         db.save(file, str(self))
