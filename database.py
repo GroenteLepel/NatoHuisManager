@@ -29,6 +29,10 @@ def save(filename: str, content: str):
         logger.log(logging.ERROR, f"Saving of filename {filename} went "
                                   f"wrong.")
 
+    conn.commit()
+    cursor.close()
+    conn.close()
+
 
 def load(filename: str):
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
@@ -36,6 +40,9 @@ def load(filename: str):
     query = "select content from textfiles where filename = %s"
     cursor.execute(query, (filename,))
     content = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
     if content:
         return content[0]
     else:
@@ -48,4 +55,7 @@ def exists(filename: str):
     cursor = conn.cursor()
     query = "select filename from textfiles where filename = %s"
     cursor.execute(query, (filename,))
-    return cursor.rowcount == 1
+    rowcount = cursor.rowcount
+    cursor.close()
+    conn.close()
+    return rowcount == 1
