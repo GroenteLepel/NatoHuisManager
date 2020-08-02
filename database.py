@@ -9,14 +9,22 @@ logger = logging.getLogger(__name__)
 
 
 def save(filename: str, content: str):
+    logger.log(logging.WARN, "entered save method.")
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cursor = conn.cursor()
     if exists(filename):
+        logger.log(logging.WARN, "file exists, updating file.")
         query = "update textfiles set content = %s where filename = %s"
     else:
         query = "insert into textfiles (content, filename) values (%s, %s)"
 
-    cursor.execute(query, (content, filename))
+    try:
+        logger.log(logging.WARN, f"executing query {query}.")
+        cursor.execute(query, (content, filename))
+        logger.log(logging.WARN, "done.")
+    except Exception as err:
+        print(err)
+
     if cursor.rowcount != 1:
         logger.log(logging.ERROR, f"Saving of filename {filename} went "
                                   f"wrong.")
