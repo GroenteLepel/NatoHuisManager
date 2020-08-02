@@ -29,7 +29,7 @@ def load(filename: str):
     cursor.execute(query, (filename,))
     content = cursor.fetchone()
     if content:
-        return content
+        return content[0]
     else:
         logger.log(logging.ERROR, f"Filename {filename} not found.")
         return ""
