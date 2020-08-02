@@ -8,16 +8,11 @@ import inventory.koelkast as kk
 import time
 
 
-def get_fridge():
-    with open(config.INVENTORY + "koelkast.txt", "r", encoding='utf8') as f:
-        fridge = f.read()
-    return fridge
-
-
-def save_fridge(fridge):
-    with open(config.INVENTORY + "koelkast.txt", "w", encoding='utf8') as f:
-        f.write(fridge)
-        return True
+def open_fridge(update: tg.Update, context: ext.CallbackContext):
+    chat_id = update.effective_chat.id
+    koelkast = kk.Koelkast.from_file("koelkast.txt")
+    context.bot.send_message(chat_id, "Opening fridge, please don't stare"
+                                      f" too long... \n{str(koelkast)}")
 
 
 def pick(update: tg.Update, context: ext.CallbackContext):

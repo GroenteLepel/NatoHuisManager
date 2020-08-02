@@ -4,6 +4,7 @@ git - Shows the git repo of this bot.
 caps - Responds with a copy of your message in caps.
 
 wie_is_de_lul - Picks a random dick from NatoHuis who is forced to cook.
+open_fridge - Opens the fridge to show restjes.
 add_restje - Add a restje to the NatoHuis koelkast.
 remove_restje - Remove a restje to the NatoHuis koelkast.
 dibs - Dibs a restje for you.

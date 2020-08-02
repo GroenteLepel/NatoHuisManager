@@ -23,7 +23,7 @@ def get_shames():
     return shames
 
 
-def create_shames(update: tg.Update, context: ext.CallbackContext):
+def init_shames(update: tg.Update, context: ext.CallbackContext):
     shames = {'Margot': 0, 'Thijs': 0, 'Daniël': 0, 'Tom': 0}
     db.save("shames.txt", str(shames))
     context.bot.send_message(
