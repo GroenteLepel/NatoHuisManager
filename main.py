@@ -21,12 +21,12 @@ def main():
     dp.add_handler(ext.CommandHandler('bop', bop))
     dp.add_handler(ext.CommandHandler('start', start))
     dp.add_handler(ext.CommandHandler('git', git))
-    # dp.add_handler(
-    #     ext.MessageHandler(
-    #         ext.Filters.text & (~ext.Filters.command),  # filters all commands
-    #         echo
-    #     )
-    # )
+    dp.add_handler(
+        ext.MessageHandler(
+            ext.Filters.text("test") & (~ext.Filters.command),  # filters all commands
+            echo
+        )
+    )
     dp.add_handler(ext.CommandHandler('caps', caps))
     dp.add_handler(ext.InlineQueryHandler(inline_caps))
 
