@@ -23,8 +23,8 @@ def main():
     dp.add_handler(ext.CommandHandler('git', git))
     dp.add_handler(
         ext.MessageHandler(
-            ext.Filters.text("test") & (~ext.Filters.command),  # filters all commands
-            echo
+            ext.Filters.text("XD"),  # filters all except given string
+            shame_xd
         )
     )
     dp.add_handler(ext.CommandHandler('caps', caps))

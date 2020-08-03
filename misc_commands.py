@@ -35,11 +35,14 @@ def git(update: tg.Update, context: ext.CallbackContext):
     )
 
 
-def echo(update: tg.Update, context: ext.CallbackContext):
+def shame_xd(update: tg.Update, context: ext.CallbackContext):
     """Tutorial command to echo all messages send."""
-    context.bot.send_message(
+    xd_gif = "https://media1.giphy.com/media/3glEquTzrYXVm/giphy.gif?cid=ecf05e473jsk3f9udz4v4jpooz94l6mc5x08l1zbriypyfwi&rid=giphy.gif"
+
+    context.bot.send_animation(
         chat_id=update.effective_chat.id,
-        text=update.message.text
+        animation=xd_gif,
+        caption="omg XD XD XD 😂😂🤣🤣👌👌👌"
     )
 
 
