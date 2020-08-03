@@ -40,6 +40,7 @@ def shame_xd(update: tg.Update, context: ext.CallbackContext):
     """Tutorial command to echo all messages send."""
     max_emojis = 4
     xd_gif = "https://media1.giphy.com/media/3glEquTzrYXVm/giphy.gif?cid=ecf05e473jsk3f9udz4v4jpooz94l6mc5x08l1zbriypyfwi&rid=giphy.gif"
+    xd = np.random.randint(max_emojis) * "XD "
     face_tears = np.random.randint(max_emojis) * "😂"
     rofl = np.random.randint(max_emojis) * "🤣"
     ok_hand = np.random.randint(max_emojis) * "👌"
@@ -47,7 +48,7 @@ def shame_xd(update: tg.Update, context: ext.CallbackContext):
     context.bot.send_animation(
         chat_id=update.effective_chat.id,
         animation=xd_gif,
-        caption=f"omg XD XD XD {face_tears}{ok_hand}{rofl}{hundred}"
+        caption=f"omg {xd}{face_tears}{ok_hand}{rofl}{hundred}"
     )
 
 

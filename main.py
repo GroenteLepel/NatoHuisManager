@@ -17,13 +17,15 @@ def main():
     updater = ext.Updater(conf.NATOHUISBOT_TOKEN, use_context=True)
     dp = updater.dispatcher
 
+    xd_filter = ["XD", "Xd", "xd", "xD", "XXD", "XXXD", "XDD", "xxD"]
+
     # misc_commands
     dp.add_handler(ext.CommandHandler('bop', bop))
     dp.add_handler(ext.CommandHandler('start', start))
     dp.add_handler(ext.CommandHandler('git', git))
     dp.add_handler(
         ext.MessageHandler(
-            ext.Filters.text("XD"),  # filters all except given string
+            ext.Filters.text(xd_filter),  # filters all except given string
             shame_xd
         )
     )
