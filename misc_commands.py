@@ -97,6 +97,10 @@ def set_out_till(update: tg.Update, context: ext.CallbackContext):
     """Call /set_out_for yourself until a certain date when /start_roll_call
     is mentioned."""
     chat_id = update.effective_chat.id
+    context.bot.send_message(
+        chat_id,
+        f"{context.args}, {len(context.args)}"
+    )
     if len(context.args) != 1 or len(context.args) != 2:
         context.bot.send_message(
             chat_id,
