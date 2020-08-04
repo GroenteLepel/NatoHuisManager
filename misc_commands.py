@@ -93,7 +93,12 @@ def set_out_for_absents(update: tg.Update, context: ext.CallbackContext):
                     f"/set_out_for@WhosInBot {absent} weg tot {date_str}"
                 )
             else:
-                absents.remove(absent)
+                context.bot.send_message(
+                    chat_id,
+                    f"Removed {absent} from absent list, they should be"
+                    f" returning today!"
+                )
+                del absents[absent]
     else:
         pass
 
