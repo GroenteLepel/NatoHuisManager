@@ -82,13 +82,18 @@ def set_out_for_absents(update: tg.Update, context: ext.CallbackContext):
     """Sets out for all absents from set_out_till() once /start_roll_call
     has been called."""
     absents = ast.literal_eval(db.load("absents.txt"))
-    if absents:
+    if absents or len(absents) != 0:
+        today = datetime.datetime.now()
         chat_id = update.effective_chat.id
-        for absent, date in absents.items():
-            context.bot.send_message(
-                chat_id,
-                f"/set_out_for@WhosInBot {absent} weg tot {date}"
-            )
+        for absent, date_str in absents.items():
+            date = datetime.datetime.strptime(date_str, "%d-%m")
+            if today.month <= date.month and today.day < date.day:
+                context.bot.send_message(
+                    chat_id,
+                    f"/set_out_for@WhosInBot {absent} weg tot {date_str}"
+                )
+            else:
+                absents.remove(absent)
     else:
         pass
 
@@ -130,13 +135,13 @@ def set_out_till(update: tg.Update, context: ext.CallbackContext):
         # check if there is a value in the file (db.load() returns an empty
         #  string if the file does not exist)
         if absents:
-            absents[absent] = date
+            absents[absent] = date_str
         else:
-            absents = {absent: date}
+            absents = {absent: date_str}
 
         db.save("absents.txt", str(absents))
         context.bot.send_message(
             chat_id,
-            f"{absent} has been send on absent until {date}. I will make sure"
-            f"to set you out for all roll calls until then."
+            f"{absent} has been send on absent until {date_str}. I will make"
+            f" sure to set you out for all roll calls until then."
         )
