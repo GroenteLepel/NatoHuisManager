@@ -121,7 +121,7 @@ def set_out_till(update: tg.Update, context: ext.CallbackContext):
 
         # get absent person from input / message
         if len(context.args) == 2:
-            absent = context.args[2]
+            absent = context.args[1]
         else:
             absent = update.message.from_user.first_name
 
@@ -132,8 +132,7 @@ def set_out_till(update: tg.Update, context: ext.CallbackContext):
         if absents:
             absents[absent] = date
         else:
-            absents = {}
-            absents[absent] = date
+            absents = {absent: date}
 
         db.save("absents.txt", str(absents))
         context.bot.send_message(
