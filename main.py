@@ -32,14 +32,14 @@ def main():
     dp.add_handler(ext.CommandHandler('caps', caps))
     dp.add_handler(ext.InlineQueryHandler(inline_caps))
     dp.add_handler(ext.CommandHandler('set_out_till', set_out_till, pass_args=True))
-    dp.add_handler(
-        ext.MessageHandler(
-            ext.Filters.command(
-                ['start_roll_call', 'start_roll_call@WhosInBot']
-            ),
-            set_out_for_absents
-        )
-    )
+    # dp.add_handler(
+    #     ext.MessageHandler(
+    #         ext.Filters.text(
+    #             ['/start_roll_call', '/start_roll_call@WhosInBot']
+    #         ),
+    #         set_out_for_absents
+    #     )
+    # )
     dp.add_handler(ext.CommandHandler('im_back', im_back))
 
     # kitchen
