@@ -3,6 +3,10 @@ from telegram import ext
 import requests
 import numpy as np
 
+import database as db
+
+import datetime
+import ast
 import functools as ft
 
 
@@ -74,3 +78,66 @@ def inline_caps(update: tg.Update, context: ext.CallbackContext):
     context.bot.answer_inline_query(update.inline_query.id, results)
 
 
+def set_out_for_absents(update: tg.Update, context: ext.CallbackContext):
+    """Sets out for all absents from set_out_till() once /start_roll_call
+    has been called."""
+    absents = ast.literal_eval(db.load("absents.txt"))
+    if absents:
+        chat_id = update.effective_chat.id
+        for absent, date in absents.items():
+            context.bot.send_message(
+                chat_id,
+                f"/set_out_for@WhosInBot {absent} weg tot {date}"
+            )
+    else:
+        pass
+
+
+def set_out_till(update: tg.Update, context: ext.CallbackContext):
+    """Call /set_out_for yourself until a certain date when /start_roll_call
+    is mentioned."""
+    chat_id = update.effective_chat.id
+    if len(context.args) != 1 or len(context.args) != 2:
+        context.bot.send_message(
+            chat_id,
+            "Please provide the date and person (optional) to set out for, "
+            "like so: \n"
+            "/set_out_till [day]-[month] [person_to_set_out (optional)]"
+        )
+    else:
+        # get date from input
+        date_str = context.args[0]
+        try:
+            # try to assign date to datetime object
+            date = datetime.datetime.strptime(date_str, "%d-%m")
+        except:
+            # return nothing if date provided was wrong
+            context.bot.send_message(
+                chat_id,
+                "Date format provided wrong. Please provide it like so:\n"
+                "/set_out_till [day]-[month]"
+            )
+            return
+
+        # get absent person from input / message
+        if len(context.args) == 2:
+            absent = context.args[2]
+        else:
+            absent = update.message.from_user.first_name
+
+        # get the current dict of absents
+        absents = ast.literal_eval(db.load("absents.txt"))
+        # check if there is a value in the file (db.load() returns an empty
+        #  string if the file does not exist)
+        if absents:
+            absents[absent] = date
+        else:
+            absents = {}
+            absents[absent] = date
+
+        db.save("absents.txt", str(absents))
+        context.bot.send_message(
+            chat_id,
+            f"{absent} has been send on absent until {date}. I will make sure"
+            f"to set you out for all roll calls until then."
+        )

@@ -2,6 +2,7 @@ bop - Responds with a random dog picture.
 start - Shows the start message of the bot.
 git - Shows the git repo of this bot.
 caps - Responds with a copy of your message in caps.
+set_out_till - Call /set_out_for till certain date automatically.
 
 wie_is_de_lul - Picks a random dick from NatoHuis who is forced to cook.
 open_fridge - Opens the fridge to show restjes.

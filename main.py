@@ -31,6 +31,7 @@ def main():
     )
     dp.add_handler(ext.CommandHandler('caps', caps))
     dp.add_handler(ext.InlineQueryHandler(inline_caps))
+    dp.add_handler(ext.CommandHandler('set_out_till', set_out_till, pass_args=True))
 
     # kitchen
     dp.add_handler(ext.CommandHandler('wie_is_de_lul', pick))
