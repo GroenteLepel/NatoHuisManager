@@ -99,6 +99,8 @@ def set_out_for_absents(update: tg.Update, context: ext.CallbackContext):
                     f" returning today!"
                 )
                 del absents[absent]
+
+        db.save("absents.txt", absents)
     else:
         pass
 
