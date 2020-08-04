@@ -40,7 +40,7 @@ def main():
             set_out_for_absents
         )
     )
-    dp.add_handler(ext.CommandHandler('set_out_for', set_out_for_absents))
+    dp.add_handler(ext.CommandHandler('im_back', im_back))
 
     # kitchen
     dp.add_handler(ext.CommandHandler('wie_is_de_lul', pick))

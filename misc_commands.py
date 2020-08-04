@@ -105,6 +105,24 @@ def set_out_for_absents(update: tg.Update, context: ext.CallbackContext):
         pass
 
 
+def im_back(update: tg.Update, context: ext.CallbackContext):
+    chat_id = update.effective_chat.id
+    absents = db.load("absents.txt")
+    whos_back = update.message.from_user.first_name
+    if whos_back in absents:
+        context.bot.send_message(
+            chat_id,
+            "Alright, I'll remove you from the absent list."
+        )
+        del absents[whos_back]
+        db.save("absents.txt", absents)
+    else:
+        context.bot.send_message(
+            chat_id,
+            "Uuhm, you weren't even on my absent list...?"
+        )
+
+
 def set_out_till(update: tg.Update, context: ext.CallbackContext):
     """Call /set_out_for yourself until a certain date when /start_roll_call
     is mentioned."""
