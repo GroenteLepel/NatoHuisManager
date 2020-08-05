@@ -170,3 +170,29 @@ def set_out_till(update: tg.Update, context: ext.CallbackContext):
             f"{absent} has been send on absent until {date_str}. I will make"
             f" sure to set you out for all roll calls until then."
         )
+
+
+def add_misc_commands(dp: ext.updater.Dispatcher):
+    xd_filter = ["XD", "Xd", "xd", "xD", "XXD", "XXXD", "XDD", "xxD"]
+    dp.add_handler(ext.CommandHandler('bop', bop))
+    dp.add_handler(ext.CommandHandler('start', start))
+    dp.add_handler(ext.CommandHandler('git', git))
+    dp.add_handler(
+        ext.MessageHandler(
+            ext.Filters.text(xd_filter),  # filters all except given string
+            shame_xd
+        )
+    )
+    dp.add_handler(ext.CommandHandler('caps', caps))
+    dp.add_handler(ext.InlineQueryHandler(inline_caps))
+    dp.add_handler(
+        ext.CommandHandler('set_out_till', set_out_till, pass_args=True))
+    # dp.add_handler(
+    #     ext.MessageHandler(
+    #         ext.Filters.text(
+    #             ['/start_roll_call', '/start_roll_call@WhosInBot']
+    #         ),
+    #         set_out_for_absents
+    #     )
+    # )
+    dp.add_handler(ext.CommandHandler('im_back', im_back))

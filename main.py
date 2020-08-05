@@ -7,30 +7,8 @@ def main():
     updater = ext.Updater(conf.NATOHUISBOT_TOKEN, use_context=True)
     dp = updater.dispatcher
 
-    xd_filter = ["XD", "Xd", "xd", "xD", "XXD", "XXXD", "XDD", "xxD"]
-
     # misc_commands
-    dp.add_handler(ext.CommandHandler('bop', bop))
-    dp.add_handler(ext.CommandHandler('start', start))
-    dp.add_handler(ext.CommandHandler('git', git))
-    dp.add_handler(
-        ext.MessageHandler(
-            ext.Filters.text(xd_filter),  # filters all except given string
-            shame_xd
-        )
-    )
-    dp.add_handler(ext.CommandHandler('caps', caps))
-    dp.add_handler(ext.InlineQueryHandler(inline_caps))
-    dp.add_handler(ext.CommandHandler('set_out_till', set_out_till, pass_args=True))
-    # dp.add_handler(
-    #     ext.MessageHandler(
-    #         ext.Filters.text(
-    #             ['/start_roll_call', '/start_roll_call@WhosInBot']
-    #         ),
-    #         set_out_for_absents
-    #     )
-    # )
-    dp.add_handler(ext.CommandHandler('im_back', im_back))
+    add_misc_commands(dp)
 
     # kitchen
     dp.add_handler(ext.CommandHandler('wie_is_de_lul', pick))
