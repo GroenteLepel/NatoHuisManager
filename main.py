@@ -1,16 +1,6 @@
-import telegram.ext as ext
-import telegram as tg
-
-import numpy as np
-
-import config as conf
-from shames import *
-from misc_commands import *
-from kitchen import *
-
-import time
-
-import collections
+from commands.shames import *
+from commands.misc_commands import *
+from commands.kitchen import *
 
 
 def main():

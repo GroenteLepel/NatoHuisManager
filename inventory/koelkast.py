@@ -52,8 +52,6 @@ class Restje:
             )
         return evaluation
 
-    # __repr__ = __str__
-
 
 class Koelkast:
     def __init__(self, inventory: list = []):
