@@ -111,3 +111,11 @@ def dibs(update: tg.Update, context: ext.CallbackContext):
             context.bot.send_message(chat_id, msg)
 
         context.bot.send_message(chat_id, str(koelkast))
+
+
+def add_kitchen_commands(dp: ext.updater.Dispatcher):
+    dp.add_handler(ext.CommandHandler('wie_is_de_lul', pick))
+    dp.add_handler(ext.CommandHandler('open_fridge', open_fridge))
+    dp.add_handler(ext.CommandHandler('add_restje', add_restje, pass_args=True))
+    dp.add_handler(ext.CommandHandler('remove_restje', remove_restje, pass_args=True))
+    dp.add_handler(ext.CommandHandler('dibs', dibs, pass_args=True))

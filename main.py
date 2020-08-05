@@ -11,18 +11,10 @@ def main():
     add_misc_commands(dp)
 
     # kitchen
-    dp.add_handler(ext.CommandHandler('wie_is_de_lul', pick))
-    dp.add_handler(ext.CommandHandler('open_fridge', open_fridge))
-    dp.add_handler(ext.CommandHandler('add_restje', add_restje, pass_args=True))
-    dp.add_handler(ext.CommandHandler('remove_restje', remove_restje, pass_args=True))
-    dp.add_handler(ext.CommandHandler('dibs', dibs, pass_args=True))
+    add_kitchen_commands(dp)
 
     # shames
-    dp.add_handler(ext.CommandHandler('init_shames', init_shames))
-    dp.add_handler(ext.CommandHandler('shame', shame, pass_args=True))
-    dp.add_handler(ext.CommandHandler('redeem', redeem, pass_args=True))
-    dp.add_handler(ext.CommandHandler('set_shame_counter', set_shame_counter, pass_args=True))
-    dp.add_handler(ext.CommandHandler('get_shame_list', get_shame_list))
+    add_shames_commands(dp)
 
     # running the bot
     updater.start_polling()  # starts the bot

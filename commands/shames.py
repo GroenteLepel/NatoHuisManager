@@ -201,3 +201,11 @@ def get_shame_list(update: tg.Update, context: ext.CallbackContext):
         text=scoreboard,
         parse_mode="html"
     )
+
+
+def add_shames_commands(dp: ext.updater.Dispatcher):
+    dp.add_handler(ext.CommandHandler('init_shames', init_shames))
+    dp.add_handler(ext.CommandHandler('shame', shame, pass_args=True))
+    dp.add_handler(ext.CommandHandler('redeem', redeem, pass_args=True))
+    dp.add_handler(ext.CommandHandler('set_shame_counter', set_shame_counter, pass_args=True))
+    dp.add_handler(ext.CommandHandler('get_shame_list', get_shame_list))
