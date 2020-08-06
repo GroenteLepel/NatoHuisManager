@@ -59,11 +59,11 @@ class MiscCommands:
     def shame_xd(self, update: tg.Update, context: ext.CallbackContext):
         max_emojis = 4
         xd_gif = "https://media1.giphy.com/media/3glEquTzrYXVm/giphy.gif?cid=ecf05e473jsk3f9udz4v4jpooz94l6mc5x08l1zbriypyfwi&rid=giphy.gif"
-        xd = random.randint(max_emojis) * "XD "
-        face_tears = random.randint(max_emojis) * "😂"
-        rofl = random.randint(max_emojis) * "🤣"
-        ok_hand = random.randint(max_emojis) * "👌"
-        hundred = random.randint(max_emojis) * "💯"
+        xd = random.randint(0, max_emojis) * "XD "
+        face_tears = random.randint(0, max_emojis) * "😂"
+        rofl = random.randint(0, max_emojis) * "🤣"
+        ok_hand = random.randint(0, max_emojis) * "👌"
+        hundred = random.randint(0, max_emojis) * "💯"
         context.bot.send_animation(
             chat_id=update.effective_chat.id,
             animation=xd_gif,
