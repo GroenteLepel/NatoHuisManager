@@ -1,6 +1,5 @@
 {
     "NATOHUISBOT_TOKEN": "ENV{NATOHUISBOT_TOKEN}",
-    "INVENTORY": "",
     "DATABASE_URL": "ENV{DATABASE_URL}",
     "SSLMODE": "required",
     "LOGLEVEL": "INFO",

@@ -1,4 +1,4 @@
-from .commands import Kitchen, MiscCommands, Shames, RollCall
+from .commands import Kitchen, MiscCommands, Shames, RollCall, DiceRoll
 from telegram import ext
 
 def main(config, db):
@@ -9,6 +9,7 @@ def main(config, db):
     MiscCommands(dp, config)
     RollCall(dp, config, db)
     Shames(dp, config, db)
+    DiceRoll(dp, config, db)
 
     # running the bot
     updater.start_polling()  # starts the bot
