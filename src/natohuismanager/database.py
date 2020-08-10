@@ -52,12 +52,11 @@ class PgDatabase(Database):
                 self.connection = None
             return
 
-
     def save(self, filename: str, content: str):
         self.logger.log(logging.INFO, "Database saving")
 
         with self._cursor() as cursor:
-            if exists(filename):
+            if self.exists(filename):
                 self.logger.log(logging.INFO, f"File {filename} exists, updating.")
                 query = "UPDATE textfiles SET content = %s WHERE filename = %s"
             else:
@@ -72,7 +71,6 @@ class PgDatabase(Database):
             if cursor.rowcount != 1:
                 self.logger.log(logging.ERROR, f"Rowcount was not 1 while saving.")
 
-
     def load(self, filename: str):
         with self._cursor() as cursor:
             query = "SELECT content FROM textfiles WHERE filename = %s"
@@ -84,7 +82,6 @@ class PgDatabase(Database):
             else:
                 self.logger.log(logging.ERROR, f"Filename {filename} not found.")
                 return ""
-
 
     def exists(self, filename: str):
         with self._cursor() as cursor:
