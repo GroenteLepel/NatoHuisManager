@@ -1,7 +1,7 @@
 {
     "NATOHUISBOT_TOKEN": "ENV{NATOHUISBOT_TOKEN}",
     "DATABASE_URL": "ENV{DATABASE_URL}",
-    "SSLMODE": "required",
+    "SSLMODE": "require",
     "LOGLEVEL": "INFO",
     "INHABITANTS": ["Margot", "Tom", "Thijs", "Daniël"],
     "ADMIN_USER": "KoffieKopje"
