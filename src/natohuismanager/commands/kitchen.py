@@ -13,7 +13,7 @@ from config import Config
 
 class Kitchen:
     def __init__(self, dp: ext.updater.Dispatcher, config: Config, db: Database):
-        dp.add_handler(ext.CommandHandler('wie_is_de_lul', self.pick))
+        dp.add_handler(ext.CommandHandler('wie_is_de_lul', self.wie_is_de_lul))
         dp.add_handler(ext.CommandHandler('open_fridge', self.open_fridge))
         dp.add_handler(ext.CommandHandler('add_restje', self.add_restje, pass_args=True))
         dp.add_handler(ext.CommandHandler('remove_restje', self.remove_restje, pass_args=True))
@@ -24,11 +24,13 @@ class Kitchen:
         self.koelkast = Koelkast(db)
 
     def open_fridge(self, update: tg.Update, context: ext.CallbackContext):
+        """Open the NatoHuis fridge to show restjes"""
         chat_id = update.effective_chat.id
         context.bot.send_message(chat_id, "Opening fridge, please don't stare"
                                         f" too long... \n{self.koelkast.to_string()}")
 
-    def pick(self, update: tg.Update, context: ext.CallbackContext):
+    def wie_is_de_lul(self, update: tg.Update, context: ext.CallbackContext):
+        """Picks a random dick from NatoHuis who is forced to cook.""" 
         chat_id = update.effective_chat.id
         context.bot.send_message(
             chat_id=chat_id,
@@ -52,6 +54,7 @@ class Kitchen:
         context.bot.send_message(chat_id, de_lul)
 
     def add_restje(self, update: tg.Update, context: ext.CallbackContext):
+        """Add a restje to the NatoHuis koelkast."""
         chat_id = update.effective_chat.id
 
         if len(context.args) == 0:
@@ -81,6 +84,7 @@ class Kitchen:
             )
 
     def remove_restje(self, update: tg.Update, context: ext.CallbackContext):
+        """Remove a restje to the NatoHuis koelkast."""
         chat_id = update.effective_chat.id
 
         if len(context.args) == 0:
@@ -100,6 +104,7 @@ class Kitchen:
 
 
     def dibs(self, update: tg.Update, context: ext.CallbackContext):
+        """Dibs a restje for you."""
         chat_id = update.effective_chat.id
 
         if len(context.args) == 0:

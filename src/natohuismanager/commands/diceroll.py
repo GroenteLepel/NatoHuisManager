@@ -22,6 +22,7 @@ class DiceRoll:
         self.provider = VarEnvProvider(db)
 
     def roll(self, update: tg.Update, context: ext.CallbackContext):
+        """Parse and roll somedice like this! 3d8+12"""
         chat_id = update.effective_chat.id
         user = update.message.from_user.first_name
 
@@ -48,6 +49,7 @@ class DiceRoll:
         return
 
     def distribution(self, update: tg.Update, context: ext.CallbackContext):
+        """Calculate and plot the distribution of a dice roll"""
         chat_id = update.effective_chat.id
         user = update.message.from_user.first_name
 

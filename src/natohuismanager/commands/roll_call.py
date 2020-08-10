@@ -18,6 +18,8 @@ class RollCall:
         dp.add_handler(ext.CommandHandler('set_title', self.set_title, pass_args=True))
         dp.add_handler(ext.CommandHandler('in', self.set_in))
         dp.add_handler(ext.CommandHandler('out', self.set_out))
+        dp.add_handler(ext.CommandHandler('set_in', self.set_in))
+        dp.add_handler(ext.CommandHandler('set_out', self.set_out))
         dp.add_handler(ext.CommandHandler('set_in_for', self.set_in_for, pass_args=True))
         dp.add_handler(ext.CommandHandler('set_out_for', self.set_out_for, pass_args=True))
         dp.add_handler(ext.CommandHandler('absent', self.set_absent, pass_args=True))
@@ -69,6 +71,7 @@ class RollCall:
 
 
     def loud(self, update: tg.Update, context: ext.CallbackContext):
+        """Make the bot reply a lot"""
         self.silenced = True
         self.save()
 
@@ -78,6 +81,7 @@ class RollCall:
         )
 
     def ssh(self, update: tg.Update, context: ext.CallbackContext):
+        """Make the bot silent"""
         self.silenced = False
         self.save()
 
@@ -101,6 +105,7 @@ class RollCall:
 
 
     def start_roll_call(self, update: tg.Update, context: ext.CallbackContext):
+        """Start a roll call"""
         if self.running:
             context.bot.send_message(
                 update.effective_chat.id,
@@ -119,6 +124,7 @@ class RollCall:
 
 
     def end_roll_call(self, update: tg.Update, context: ext.CallbackContext):
+        """End a roll call"""
         if not self.running:
             context.bot.send_message(
                 update.effective_chat.id,
@@ -141,6 +147,7 @@ class RollCall:
 
 
     def set_title(self, update: tg.Update, context: ext.CallbackContext):
+        """Set the title of the running roll call"""
         if not self.running:
             context.bot.send_message(
                 update.effective_chat.id,
@@ -162,6 +169,7 @@ class RollCall:
 
 
     def set_in(self, update: tg.Update, context: ext.CallbackContext):
+        """Mark yourself as in, /in also works"""
         if not self.running:
             context.bot.send_message(
                 update.effective_chat.id,
@@ -195,6 +203,7 @@ class RollCall:
             )
 
     def set_in_for(self, update: tg.Update, context: ext.CallbackContext):
+        """Mark someone else as in"""
         if not self.running:
             context.bot.send_message(
                 update.effective_chat.id,
@@ -238,6 +247,7 @@ class RollCall:
 
 
     def set_out(self, update: tg.Update, context: ext.CallbackContext):
+        """Mark yourself as out, /out also works"""
         if not self.running:
             context.bot.send_message(
                 update.effective_chat.id,
@@ -273,6 +283,7 @@ class RollCall:
 
 
     def set_out_for(self, update: tg.Update, context: ext.CallbackContext):
+        """Mark someone else as out"""
         if not self.running:
             context.bot.send_message(
                 update.effective_chat.id,
