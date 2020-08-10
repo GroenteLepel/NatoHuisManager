@@ -1,0 +1,7 @@
+{
+    "NATOHUISBOT_TOKEN": "SOME_KIND_OF_TELEGRAM_TOKEN",
+    "DATABASE_URL": "/path/to/db/folder/",
+    "LOGLEVEL": "INFO",
+    "INHABITANTS": ["Margot", "Tom", "Thijs", "Daniël"],
+    "ADMIN_USER": "KoffieKopje"
+}
