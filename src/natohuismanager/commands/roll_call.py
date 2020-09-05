@@ -104,9 +104,9 @@ class RollCall:
         if self.running:
             context.bot.send_message(
                 update.effective_chat.id,
-                "There is already a roll call running, end that first."
+                "There is already a roll call running, ending that."
             )
-            return
+            self.set_emtpy()
 
         self.title = ' '.join(context.args) + "\n" if context.args else ""
         self.running = True
