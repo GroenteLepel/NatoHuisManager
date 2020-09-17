@@ -5,6 +5,20 @@ caps - Responds with a copy of your message in caps.
 set_out_till - Call /set_out_for till certain date automatically.
 im_back - Remove yourself from the absent list.
 
+ssh - Silence Rutger 2.0 (if only 1.0 had this feature).
+loud - Allow Rutger 2.0 to be louder
+start_roll_call - Start a new roll call (ends the previous one).
+end_roll_call - End current roll call.
+set_title - Set the title of the roll call.
+in - Tell everyone you're in the roll call.
+out - Tell everyone you're out the roll call.
+set_in_for - Tell everyone someone's in the roll call.
+set_out_for - Tell everyone someone's out the roll call.
+absent - Set yourself absent until you call /in.
+set_absent_for - Set someone absent until they call /in.
+im_back - Remove yourself from absent.
+you_back - Remove someone from absent.
+
 wie_is_de_lul - Picks a random dick from NatoHuis who is forced to cook.
 open_fridge - Opens the fridge to show restjes.
 add_restje - Add a restje to the NatoHuis koelkast.
