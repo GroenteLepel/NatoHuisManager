@@ -13,7 +13,7 @@ from config import Config
 
 class Kitchen:
     def __init__(self, dp: ext.updater.Dispatcher, config: Config, db: Database):
-        dp.add_handler(ext.CommandHandler('wie_is_de_lul', self.pick))
+        dp.add_handler(ext.CommandHandler('wie_is_de_lul', self.pick, pass_args=True))
         dp.add_handler(ext.CommandHandler('open_fridge', self.open_fridge))
         dp.add_handler(ext.CommandHandler('add_restje', self.add_restje, pass_args=True))
         dp.add_handler(ext.CommandHandler('remove_restje', self.remove_restje, pass_args=True))
@@ -30,18 +30,52 @@ class Kitchen:
 
     def pick(self, update: tg.Update, context: ext.CallbackContext):
         chat_id = update.effective_chat.id
+
+        de_mogelijke_lul = self.config['INHABITANTS']
+        to_remove = []
+        to_add = []
+        if context.args:
+            for arg in context.args:
+
+                if arg[0] == '-':
+                    person = arg[1:]
+                    if person not in de_mogelijke_lul:
+                        context.bot.send_message(
+                            chat_id,
+                            f"{person} not found in the list to pick from."
+                        )
+                    elif person == 'Daniël':
+                        # jesus christ there certainly is a better way but I'll
+                        #  just leave this here as a statement
+                        to_remove.append('DaniÃ«l')
+                    else:
+                        to_remove.append(person)
+
+                elif arg[0] == '+':
+                    to_add.append(arg[1:])
+
+        for person in to_remove:
+            de_mogelijke_lul.remove(person)
+        for person in to_add:
+            de_mogelijke_lul.append(person)
+
         context.bot.send_message(
             chat_id=chat_id,
             text="Is even kijken wie er dit keer gaat koken..."
         )
-        de_lul = random.choice(self.config["INHABITANTS"])
+        de_lul = random.choice(de_mogelijke_lul)
         rand = random.random()
         while rand < 0.5:
             think_msg = random.choice([
                 "Even denken...",
                 "Dit is een moeilijke...",
                 "Zal ik gewoon weer Tom kiezen? Misschien wel... Misschien niet...",
-                "Jaaaa ik heb 'm bijna..."
+                "Jaaaa ik heb 'm bijna...",
+                "Jullie zijn ook weer is te lui om zelf te kiezen",
+                "Laten jullie mij ook weer al het werk doen",
+                "Hebben jullie überhaupt jullie schoonmaaktaak wel gedaan?",
+                "Geef me even...",
+                "Het is wel de dag er voor hè...?"
             ])
             context.bot.send_chat_action(chat_id, tg.ChatAction.TYPING)
             time.sleep(2 * random.random())
