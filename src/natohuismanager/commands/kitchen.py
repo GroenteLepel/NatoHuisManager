@@ -54,10 +54,19 @@ class Kitchen:
                 elif arg[0] == '+':
                     to_add.append(arg[1:])
 
-        context.bot.send_message(
-            chat_id,
-            f"Ik zal {to_remove} niet kiezen."
-        )
+                else:
+                    context.bot.send_message(
+                        chat_id,
+                        "If you want to remove someone from the list, precede"
+                        "their name with an '-', if you want to add someone,"
+                        "precede their name with a '+'."
+                    )
+
+        if len(to_remove) != 0:
+            context.bot.send_message(
+                chat_id,
+                f"Ik zal {', '.join(to_remove)} niet kiezen."
+            )
 
         for person in to_remove:
             de_mogelijke_lul.remove(person)
@@ -80,7 +89,8 @@ class Kitchen:
                 "Laten jullie mij ook weer al het werk doen",
                 "Hebben jullie überhaupt jullie schoonmaaktaak wel gedaan?",
                 "Geef me even...",
-                "Het is wel de dag er voor hè...?"
+                "Het is wel de dag er voor hè...?",
+                "Ratatatatatatatatatatatatatata"
             ])
             context.bot.send_chat_action(chat_id, tg.ChatAction.TYPING)
             time.sleep(2 * random.random())
