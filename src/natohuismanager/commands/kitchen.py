@@ -63,11 +63,18 @@ class Kitchen:
                         "precede their name with a '+'."
                     )
 
+        info = ""
         if len(to_remove) != 0:
-            context.bot.send_message(
-                chat_id,
-                f"Ik zal {', '.join(to_remove)} niet kiezen."
-            )
+            info = f"Ik kies {', '.join(to_remove)} niet"
+        if len(to_add) != 0:
+            if info == "":
+                info = f"Ik kies {', '.join(to_add)} ook"
+            else:
+                info += f", maar {', '.join(to_add)} ook"
+        context.bot.send_message(
+            chat_id,
+            info + "."
+        )
 
         for person in to_remove:
             de_mogelijke_lul.remove(person)
