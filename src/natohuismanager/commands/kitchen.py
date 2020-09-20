@@ -40,11 +40,11 @@ class Kitchen:
 
                 if arg[0] == '-':
                     person = arg[1:]
-                    if person == 'Daniël':
-                        # jesus christ there certainly is a better way but I'll
-                        #  just leave this here as a statement
-                        to_remove.append('DaniÃ«l')
-                    elif person not in de_mogelijke_lul:
+                    # if person == 'Daniël':
+                    #     # jesus christ there certainly is a better way but I'll
+                    #     #  just leave this here as a statement
+                    #     to_remove.append('DaniÃ«l')
+                    if person not in de_mogelijke_lul:
                         context.bot.send_message(
                             chat_id,
                             f"{person} not found in the list to pick from."
