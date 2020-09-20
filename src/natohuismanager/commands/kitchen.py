@@ -1,3 +1,4 @@
+import copy
 import time
 import random
 import logging
@@ -31,7 +32,7 @@ class Kitchen:
     def pick(self, update: tg.Update, context: ext.CallbackContext):
         chat_id = update.effective_chat.id
 
-        de_mogelijke_lul = self.config['INHABITANTS']
+        de_mogelijke_lul = copy.copy(self.config['INHABITANTS'])
         to_remove = []
         to_add = []
         if context.args:
@@ -39,15 +40,15 @@ class Kitchen:
 
                 if arg[0] == '-':
                     person = arg[1:]
-                    if person not in de_mogelijke_lul:
+                    if person == 'Daniël':
+                        # jesus christ there certainly is a better way but I'll
+                        #  just leave this here as a statement
+                        to_remove.append('DaniÃ«l')
+                    elif person not in de_mogelijke_lul:
                         context.bot.send_message(
                             chat_id,
                             f"{person} not found in the list to pick from."
                         )
-                    elif person == 'Daniël':
-                        # jesus christ there certainly is a better way but I'll
-                        #  just leave this here as a statement
-                        to_remove.append('DaniÃ«l')
                     else:
                         to_remove.append(person)
 
