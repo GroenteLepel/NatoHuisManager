@@ -18,6 +18,7 @@ absent - Set yourself absent until you call /in.
 set_absent_for - Set someone absent until they call /in.
 im_back - Remove yourself from absent.
 you_back - Remove someone from absent.
+whos_in - Get current enrollment list.
 
 wie_is_de_lul - Picks a random dick from NatoHuis who is forced to cook.
 open_fridge - Opens the fridge to show restjes.

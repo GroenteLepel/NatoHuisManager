@@ -24,6 +24,7 @@ class RollCall:
         dp.add_handler(ext.CommandHandler('set_absent_for', self.set_absent_for, pass_args=True))
         dp.add_handler(ext.CommandHandler('im_back', self.im_back, pass_args=True))
         dp.add_handler(ext.CommandHandler('you_back', self.you_back, pass_args=True))
+        dp.add_handler(ext.CommandHandler('whos_in', self.whos_in))
 
         self.logger = logging.getLogger(__name__)
         self.config = config
@@ -223,7 +224,7 @@ class RollCall:
 
         reason = ' '.join(context.args[1:])
         
-        self.people_in[to_enroll] = reason
+        self.people_in[to_enroll] = '(' + reason + ')'
 
         if to_enroll in self.people_out:
             del self.people_out[to_enroll]
@@ -422,4 +423,18 @@ class RollCall:
                 f"{to_absent} is back!\n" + self.format_roll_call()
             )
 
+    def whos_in(self, update: tg.Update, context: ext.CallbackContext):
+        """Get the current enrollment. surpasses silence"""
+        if not self.running:
+            context.bot.send_message(
+                update.effective_chat.id,
+                "There is no running roll call."
+            )
+            return
 
+        chat_id = update.effective_chat.id
+
+        context.bot.send_message(
+            chat_id,
+            self.format_roll_call()
+        )
