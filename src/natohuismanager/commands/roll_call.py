@@ -69,7 +69,7 @@ class RollCall:
 
 
     def loud(self, update: tg.Update, context: ext.CallbackContext):
-        self.silenced = True
+        self.silenced = False
         self.save()
 
         context.bot.send_message(
@@ -78,7 +78,7 @@ class RollCall:
         )
 
     def ssh(self, update: tg.Update, context: ext.CallbackContext):
-        self.silenced = False
+        self.silenced = True
         self.save()
 
         context.bot.send_message(
