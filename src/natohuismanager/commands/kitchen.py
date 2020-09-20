@@ -54,6 +54,11 @@ class Kitchen:
                 elif arg[0] == '+':
                     to_add.append(arg[1:])
 
+        context.bot.send_message(
+            chat_id,
+            f"Ik zal {to_remove} niet kiezen."
+        )
+
         for person in to_remove:
             de_mogelijke_lul.remove(person)
         for person in to_add:
