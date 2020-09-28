@@ -94,6 +94,8 @@ class RollCall:
             if persons:
                 roll_call_str += f"{in_out.capitalize()}:\n"
 
+                if reason:
+                    reason = "(" + reason + ")"
                 for person, reason in persons.items():
                     roll_call_str += f" - {person} {reason}\n"
                 roll_call_str += "\n"
@@ -107,7 +109,7 @@ class RollCall:
                 update.effective_chat.id,
                 "There is already a roll call running, ending that."
             )
-            self.set_emtpy()
+            self.set_empty()
 
         self.title = ' '.join(context.args) + "\n" if context.args else ""
         self.running = True
@@ -224,7 +226,7 @@ class RollCall:
 
         reason = ' '.join(context.args[1:])
         
-        self.people_in[to_enroll] = '(' + reason + ')'
+        self.people_in[to_enroll] = reason
 
         if to_enroll in self.people_out:
             del self.people_out[to_enroll]
@@ -253,7 +255,7 @@ class RollCall:
         if to_deroll in self.people_absent:
             context.bot.send_message(
                 chat_id,
-                f"I already knew that, {to_enroll} is noted absent."
+                f"I already knew that, {to_deroll} is noted absent."
             )
             return
 
@@ -296,7 +298,7 @@ class RollCall:
         if to_deroll in self.people_absent:
             context.bot.send_message(
                 chat_id,
-                f"I already knew that, {to_enroll} is noted absent."
+                f"I already knew that, {to_deroll} is noted absent."
             )
             return
 
@@ -390,7 +392,7 @@ class RollCall:
         if not self.silenced:
             context.bot.send_message(
                 chat_id,
-                f"{to_absent} is back!\n" + self.format_roll_call()
+                f"{to_unabsent} is back!\n" + self.format_roll_call()
             )
 
     def you_back(self, update: tg.Update, context: ext.CallbackContext):
@@ -420,7 +422,7 @@ class RollCall:
         if not self.silenced:
             context.bot.send_message(
                 chat_id,
-                f"{to_absent} is back!\n" + self.format_roll_call()
+                f"{to_unabsent} is back!\n" + self.format_roll_call()
             )
 
     def whos_in(self, update: tg.Update, context: ext.CallbackContext):
