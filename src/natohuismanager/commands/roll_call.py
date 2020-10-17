@@ -29,7 +29,7 @@ class RollCall:
         self.logger = logging.getLogger(__name__)
         self.config = config
         self.db = db
-        
+
         self.silenced = False
         self.running = False
         self.title = ""
@@ -59,7 +59,7 @@ class RollCall:
 
     def save(self):
         data = json.dumps({
-            'silenced': self.silenced, 
+            'silenced': self.silenced,
             'running': self.running,
             'title': self.title,
             'people_in': self.people_in,
@@ -94,9 +94,9 @@ class RollCall:
             if persons:
                 roll_call_str += f"{in_out.capitalize()}:\n"
 
-                if reason:
-                    reason = "(" + reason + ")"
                 for person, reason in persons.items():
+                    if reason:
+                        reason = "(" + reason + ")"
                     roll_call_str += f" - {person} {reason}\n"
                 roll_call_str += "\n"
 
@@ -183,7 +183,7 @@ class RollCall:
                 f"Hey {to_enroll} you were noted absent, but I got rid of that. Welcome back!"
             )
             del self.people_absent[to_enroll]
-        
+
         self.people_in[to_enroll] = reason
 
         if to_enroll in self.people_out:
@@ -225,7 +225,7 @@ class RollCall:
             return
 
         reason = ' '.join(context.args[1:])
-        
+
         self.people_in[to_enroll] = reason
 
         if to_enroll in self.people_out:
@@ -260,7 +260,7 @@ class RollCall:
             return
 
         reason = ' '.join(context.args)
-        
+
         self.people_out[to_deroll] = reason
 
         if to_deroll in self.people_in:
@@ -303,7 +303,7 @@ class RollCall:
             return
 
         reason = ' '.join(context.args[1:])
-        
+
         self.people_out[to_deroll] = reason
 
         if to_deroll in self.people_in:
@@ -324,7 +324,7 @@ class RollCall:
         # read in who's to deroll
         to_absent = update.message.from_user.first_name
         reason = ' '.join(context.args)
-        
+
         self.people_absent[to_absent] = reason
 
         if self.running and to_absent in self.people_in:
@@ -356,7 +356,7 @@ class RollCall:
             return
 
         reason = ' '.join(context.args[1:])
-        
+
         self.people_absent[to_absent] = reason
 
         if self.running and to_absent in self.people_in:
@@ -377,14 +377,14 @@ class RollCall:
         """Note that you are back"""
         chat_id = update.effective_chat.id
         to_unabsent = update.message.from_user.first_name
-        
+
         if not to_unabsent in self.people_absent:
             context.bot.send_message(
                 chat_id,
                 "Lol you were not gone mate!"
             )
             return
-            
+
         del self.people_absent[to_unabsent]
 
         self.save()
@@ -407,14 +407,14 @@ class RollCall:
                 "/you_back [person]"
             )
             return
-        
+
         if not to_unabsent in self.people_absent:
             context.bot.send_message(
                 chat_id,
                 f"Lol {to_unabsent} is not gone mate!"
             )
             return
-            
+
         del self.people_absent[to_unabsent]
 
         self.save()
