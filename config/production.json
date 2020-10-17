@@ -3,6 +3,6 @@
     "DATABASE_URL": "ENV{DATABASE_URL}",
     "SSLMODE": "require",
     "LOGLEVEL": "INFO",
-    "INHABITANTS": ["Margot", "Tom", "Thijs", "Daniël"],
+    "INHABITANTS": ["Margot", "Tom", "Nikki", "Daniël"],
     "ADMIN_USER": "KoffieKopje"
 }
